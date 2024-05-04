@@ -23,3 +23,19 @@ mlp_classifer = tm.train_with_MLPClassifier(features=features_to_train, labels=l
 predicted_labels = mlp_classifer.predict(features_to_test)
 em.evaluate_trained_model(labels_to_test, predicted_labels, algorithm="MLP Classifier")
 
+'''
+Start the thrid training with SVM model 
+best params will choosed using the grid search
+'''
+#choosing best params for our svm model
+best_svm_params = tm.get_svc_best_params(features_to_train, labels_to_train)
+
+#training SVM model with different kernels to see the difference
+kernels = ["sigmoid", "poly", "rbf"]
+
+for kernel in kernels:
+    svm_model = tm.train_data_with_SVM_model_using_poly_kernel(features_to_train, labels_to_train, C=best_svm_params.get("C"), gamma=best_svm_params.get("gamma"), kernel_=kernel)
+    
+    #evaluation of the SVM model with a specific kernel
+    predicted_labels = svm_model.predict(features_to_test)
+    em.evaluate_trained_model(labels_to_test, predicted_labels, algorithm=f"SVM with {kernel} kernel")
