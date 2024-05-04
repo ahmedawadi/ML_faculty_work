@@ -13,6 +13,10 @@ def prepare_data_for_training():
     print(seeds_dataset.head())
     print("\n\n----------------------------------------------------------------\n\n")
 
+    #class distribution
+    classes_names = {1: "Kama", 2: "Rosa", 3: "Canadian"}
+    seeds_dataset["Class(1,2,3)"] = seeds_dataset["Class(1,2,3)"].replace(classes_names)
+
     #separation of the features and labels 
     seeds_features = seeds_dataset.loc[:, seeds_dataset.columns != 'Class(1,2,3)'] 
     labels = seeds_dataset['Class(1,2,3)']
